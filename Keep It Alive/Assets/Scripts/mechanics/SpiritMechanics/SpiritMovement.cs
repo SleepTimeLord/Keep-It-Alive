@@ -17,7 +17,6 @@ public class SpiritMovement : MonoBehaviour
     private void OnEnable()
     {
         teleport.action.performed += SpiritTeleport;
-
     }
     private void OnDisable()
     {
@@ -34,6 +33,7 @@ public class SpiritMovement : MonoBehaviour
     {
         if (canTeleport)
         {
+            Debug.Log(context);
             spirit.position = CursorPosition();
             canTeleport = false;
             StartCoroutine(StartCooldown());
