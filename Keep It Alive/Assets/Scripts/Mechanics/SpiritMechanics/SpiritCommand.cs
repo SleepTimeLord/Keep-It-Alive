@@ -33,7 +33,7 @@ public class SpiritCommand : MonoBehaviour
     // if preformed a different input, stops the previous trigger
     private void StartHeroAttack(InputAction.CallbackContext context)
     {
-        _hero.ActionCommanded("attack");
+        _hero.ActionCommanded("chase");
     }
 
     private void StartHeroRally(InputAction.CallbackContext context)

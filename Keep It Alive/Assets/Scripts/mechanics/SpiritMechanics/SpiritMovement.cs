@@ -33,7 +33,6 @@ public class SpiritMovement : MonoBehaviour
     {
         if (canTeleport)
         {
-            Debug.Log(context);
             spirit.position = CursorPosition();
             canTeleport = false;
             StartCoroutine(StartCooldown());

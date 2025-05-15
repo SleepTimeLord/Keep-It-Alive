@@ -27,6 +27,8 @@ public class CommandAttack : HeroState
     {
         base.FrameUpdate();
 
+        hero.AttackEnemy();
+
         hero.ChangeFromAttackState();
     }
 

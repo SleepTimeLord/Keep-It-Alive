@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class CommandRally : HeroState
+public class ChaseState : HeroState
 {
-    public CommandRally(Hero hero, HeroStateMachine heroStateMachine) : base(hero, heroStateMachine)
+    public ChaseState(Hero hero, HeroStateMachine heroStateMachine) : base(hero, heroStateMachine)
     {
-
     }
 
     public override void AnimationTriggerEvent()
@@ -15,7 +14,7 @@ public class CommandRally : HeroState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("is in rally state");
+        Debug.Log("Is in chase State");
     }
 
     public override void ExitState()
@@ -27,9 +26,8 @@ public class CommandRally : HeroState
     {
         base.FrameUpdate();
 
-        hero.Rally();
-
-        hero.ChangeFromRallyState();
+        hero.ChaseEnemy();
+        hero.ChangeFromChaseState();
     }
 
     public override void PhysicsUpdate()
