@@ -15,6 +15,9 @@ public class CommandRally : HeroState
     public override void EnterState()
     {
         base.EnterState();
+        hero.isMoving = true;
+        hero.dashSpeed = hero.intialDashSpeed;
+        hero.dashSpeedFalloff = hero.intialDashSpeedFalloff;
         Debug.Log("is in rally state");
     }
 

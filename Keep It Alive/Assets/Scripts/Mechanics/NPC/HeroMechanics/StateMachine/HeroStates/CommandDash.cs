@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class ChaseState : HeroState
+public class CommandDash : HeroState
 {
-    public ChaseState(Hero hero, HeroStateMachine heroStateMachine) : base(hero, heroStateMachine)
+    public CommandDash(Hero hero, HeroStateMachine heroStateMachine) : base(hero, heroStateMachine)
     {
+
     }
 
     public override void AnimationTriggerEvent()
@@ -14,27 +15,24 @@ public class ChaseState : HeroState
     public override void EnterState()
     {
         base.EnterState();
-        hero.isMoving = true;
-        hero.dashSpeed = hero.intialDashSpeed;
-        hero.dashSpeedFalloff = hero.intialDashSpeedFalloff;
-        Debug.Log("Is in chase State");
+        hero.cannotBeDamaged = true;
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        hero.cannotBeDamaged = false;
     }
 
     public override void FrameUpdate()
     {
+        hero.DashtoEnemyorRally();
         base.FrameUpdate();
-
-        hero.ChangeFromChaseState();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        hero.ChaseEnemy();
     }
 }
+

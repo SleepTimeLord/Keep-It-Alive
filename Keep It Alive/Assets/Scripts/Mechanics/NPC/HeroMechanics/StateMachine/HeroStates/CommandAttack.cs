@@ -15,6 +15,7 @@ public class CommandAttack : HeroState
     public override void EnterState()
     {
         base.EnterState();
+        hero.isMoving = false;
         Debug.Log("is in attack state");
     }
 

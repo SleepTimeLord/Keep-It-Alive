@@ -16,18 +16,19 @@ public class CommandDodge : HeroState
     {
         base.EnterState();
         Debug.Log("is in dodge state");
+        hero.cannotBeDamaged = true;
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        hero.cannotBeDamaged = false;
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-
-        hero.ChangeFromDodgeState();
+        hero.Dodge();
     }
 
     public override void PhysicsUpdate()
