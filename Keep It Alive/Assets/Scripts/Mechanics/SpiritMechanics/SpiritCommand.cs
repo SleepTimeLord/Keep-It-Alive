@@ -38,7 +38,7 @@ public class SpiritCommand : MonoBehaviour
     // if preformed a different input, stops the previous trigger
     private void StartHeroAttack(InputAction.CallbackContext context)
     {
-        if (!_hero.isInAttackRange && !attackCooldown.heroCommand.isOnCooldown)
+        if (!_hero.IsInAttackPos() && !attackCooldown.heroCommand.isOnCooldown)
         {
             _hero.ActionCommanded("chase");
             attackCooldown.UseCommand();

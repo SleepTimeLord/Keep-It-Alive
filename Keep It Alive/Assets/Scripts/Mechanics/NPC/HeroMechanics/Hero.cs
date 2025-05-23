@@ -3,7 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeCheckable
+public class Hero : MonoBehaviour, ITriggerCommandable
 {
     public int maxHealth = 20;
     public int currentHealth;
@@ -21,7 +21,6 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
     public CommandDash heroDash { get; set; }
     public ChaseState heroChase { get; set; }
     #endregion
-    public bool isInAttackRange { get; set; }
     public bool isMoving = false;
 
     private Transform heroTransform;
@@ -120,11 +119,6 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
         command = action;
     }
 
-    public void SetAttackRangeBool(bool inAttackRange)
-    {
-        isInAttackRange = inAttackRange;
-    }
-
     // this are the mechanics for the hero (standstill, rally, dodge, attack)
     #region Hero Mechanics
 
@@ -147,6 +141,23 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
     #endregion
 
     #region Chase
+    public GameObject GetEnemyGameObject()
+    {
+        return GameObject.FindGameObjectWithTag("EnemyAttackPos");
+    }
+    public bool IsInAttackPos()
+    {
+        Transform enemyTransform = GetEnemyGameObject().transform;
+
+        if (heroTransform.position == enemyTransform.position)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     // chases the enemy until in attack range then attacks.
     public void ChaseEnemy()
     {
@@ -154,17 +165,18 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
         {
             Transform enemyTransform = GetEnemyGameObject().transform;
             heroTransform.position = Vector3.MoveTowards(heroTransform.position, enemyTransform.position, Time.deltaTime * heroSpeed);
+
+            if (IsInAttackPos())
+            {
+                command = "attack";
+                heroStateMachine.ChangeState(heroAttack);
+            }
         }
         else
         {
             // happens if there is no enemy
+            command = "standstill";
             heroStateMachine.ChangeState(heroStandStill);
-        }
-        if (isInAttackRange)
-        {
-            // this ensures that it doesn't glitch
-            command = "attack";
-            heroStateMachine.ChangeState(heroAttack);
         }
     }
 
@@ -181,11 +193,6 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
                 heroStateMachine.ChangeState(heroStandStill); break;
         }
     }
-
-    public GameObject GetEnemyGameObject()
-    {
-        return GameObject.FindGameObjectWithTag("EnemyAttackPos");
-    }
     #endregion
 
     #region Attack
@@ -194,8 +201,9 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
     {
         // attacks enemy
         // if not in range, it goes to standstill state until says so
-        if (!isInAttackRange)
+        if (!IsInAttackPos())
         {
+            command = "standstill";
             heroStateMachine.ChangeState(heroStandStill);
         }
     }
@@ -244,7 +252,6 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
     }
     #endregion
 
-    // TODO: change from coroutine to time.deltatiem to calculate cooldown.
     #region Dodge
     // dodges in place
     public void Dodge()
@@ -255,7 +262,7 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
         if (dodgeTimer < 0)
         {
             // change to new scene
-            if (dodgeToAttack && isInAttackRange)
+            if (dodgeToAttack && IsInAttackPos())
             {
                 command = "attack";
                 heroStateMachine.ChangeState(heroAttack);
@@ -268,7 +275,6 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
         }
     }
     #endregion
-
 
     #region Dash
     public void DashtoEnemyorRally()
@@ -300,7 +306,7 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
                 command = "chase";
                 heroStateMachine.ChangeState(heroChase);
             }
-            else if (isInAttackRange)
+            else if (IsInAttackPos())
             {
                 dashSpeed = 0;
                 command = "attack";
