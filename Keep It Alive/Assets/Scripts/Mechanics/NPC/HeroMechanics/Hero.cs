@@ -37,11 +37,11 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
     public float dashSpeedFalloff = 30f;
 
     private bool dashingToRally = false;
-    public bool shortenedDashtoEnemy = false;
     private Vector3 dashDir;
 
     [Header("Dodge Settings")]
-    [SerializeField] private float dodgeTime = .5f;
+    public float dodgeTime = .5f;
+    public float dodgeTimer = 0;
     private bool dodgeToAttack = false;
 
     [Header("Cooldown Settings")]
@@ -184,7 +184,7 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
 
     public GameObject GetEnemyGameObject()
     {
-        return GameObject.FindGameObjectWithTag("Enemy");
+        return GameObject.FindGameObjectWithTag("EnemyAttackPos");
     }
     #endregion
 
@@ -244,77 +244,72 @@ public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeChe
     }
     #endregion
 
+    // TODO: change from coroutine to time.deltatiem to calculate cooldown.
     #region Dodge
     // dodges in place
     public void Dodge()
     {
-        StartCoroutine(DodgeTime());
-    }
+        // this applies the cooldown
+        dodgeTimer -= Time.deltaTime;
 
-    IEnumerator DodgeTime()
-    {
-        yield return new WaitForSeconds(dodgeTime);
-        if (dodgeToAttack && isInAttackRange)
+        if (dodgeTimer < 0)
         {
-            command = "attack";
-            heroStateMachine.ChangeState(heroAttack);
-        }
-        else
-        {
-            command = "standstill";
-            heroStateMachine.ChangeState(heroStandStill);
+            // change to new scene
+            if (dodgeToAttack && isInAttackRange)
+            {
+                command = "attack";
+                heroStateMachine.ChangeState(heroAttack);
+            }
+            else
+            {
+                command = "standstill";
+                heroStateMachine.ChangeState(heroStandStill);
+            }
         }
     }
     #endregion
 
+
     #region Dash
     public void DashtoEnemyorRally()
     {
-        if (!shortenedDashtoEnemy)
+        if (dashingToRally)
         {
-            if (dashingToRally)
+            Transform spiritTransform = spirit.transform;
+            dashDir = (spiritTransform.position - heroTransform.position).normalized;
+
+            if (dashSpeed <= heroSpeed)
             {
-                Transform spiritTransform = spirit.transform;
-                dashDir = (spiritTransform.position - heroTransform.position).normalized;
-
-                if (dashSpeed <= heroSpeed)
-                {
-                    command = "rally";
-                    heroStateMachine.ChangeState(heroRally);
-                }
-                else if (heroTransform.position == spirit.transform.position)
-                {
-                    command = "standstill";
-                    heroStateMachine.ChangeState(heroStandStill);
-                }
+                command = "rally";
+                heroStateMachine.ChangeState(heroRally);
             }
-            else
+            else if (heroTransform.position == spirit.transform.position)
             {
-                print("dash to enemy");
-                Transform enemyTransform = GetEnemyGameObject().transform;
-                dashDir = (enemyTransform.position - heroTransform.position).normalized;
-
-                if (dashSpeed <= heroSpeed)
-                {
-                    command = "chase";
-                    heroStateMachine.ChangeState(heroChase);
-                }
-                else if (isInAttackRange)
-                {
-                    dashSpeed = 0;
-                    command = "attack";
-                    heroStateMachine.ChangeState(heroAttack);
-                }
+                command = "standstill";
+                heroStateMachine.ChangeState(heroStandStill);
             }
-            heroTransform.position += dashDir * dashSpeed * Time.deltaTime;
-
-            dashSpeed -= dashSpeed * dashSpeedFalloff * Time.deltaTime;
         }
         else
         {
-            command = "dodge";
-            heroStateMachine.ChangeState(heroDodge);
+            print("dash to enemy");
+            Transform enemyTransform = GetEnemyGameObject().transform;
+            dashDir = (enemyTransform.position - heroTransform.position).normalized;
+
+            if (dashSpeed <= heroSpeed)
+            {
+                command = "chase";
+                heroStateMachine.ChangeState(heroChase);
+            }
+            else if (isInAttackRange)
+            {
+                dashSpeed = 0;
+                command = "attack";
+                heroStateMachine.ChangeState(heroAttack);
+            }
         }
+        heroTransform.position += dashDir * dashSpeed * Time.deltaTime;
+
+        dashSpeed -= dashSpeed * dashSpeedFalloff * Time.deltaTime;
     }
     #endregion
 

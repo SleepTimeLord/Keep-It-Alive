@@ -16,6 +16,8 @@ public class CommandDodge : HeroState
     {
         base.EnterState();
         Debug.Log("is in dodge state");
+        // starts the cooldown when enter the state
+        hero.dodgeTimer = hero.dodgeTime;
         hero.cannotBeDamaged = true;
     }
 
