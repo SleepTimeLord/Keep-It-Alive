@@ -3,14 +3,14 @@ using UnityEngine;
 public interface IDamageable
 {
     // How much damage npc takes
-    void Damage(float damageAmount);
+    void Damage(int damageAmount);
 
     // when dies
     void Die();
 
     // npc max health
-    float maxHealth {  get; set; }
+    int maxHealth {  get; set; }
 
     // npc current health
-    float currentHealth { get; set; }
+    int currentHealth { get; set; }
 }

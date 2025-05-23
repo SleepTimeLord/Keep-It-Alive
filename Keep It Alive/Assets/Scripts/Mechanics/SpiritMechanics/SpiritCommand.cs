@@ -10,6 +10,12 @@ public class SpiritCommand : MonoBehaviour
 
     private Hero _hero;
 
+    [Header("Command Types")]
+    public CommandCooldown rallyCooldown;
+    public CommandCooldown attackCooldown;
+    public CommandCooldown dodgeCooldown;
+    public CommandCooldown standstillCooldown;
+
     private void Start()
     {
         _hero = GetComponentInParent<Hero>();
@@ -32,33 +38,47 @@ public class SpiritCommand : MonoBehaviour
     // if preformed a different input, stops the previous trigger
     private void StartHeroAttack(InputAction.CallbackContext context)
     {
-        if (!_hero.isInAttackRange)
+        if (!_hero.isInAttackRange && !attackCooldown.heroCommand.isOnCooldown)
         {
             _hero.ActionCommanded("chase");
-
+            attackCooldown.UseCommand();
+            rallyCooldown.UseCommand();
         }
     }
 
     private void StartHeroRally(InputAction.CallbackContext context)
     {
-        _hero.ActionCommanded("rally");
-        _hero.initialSpiritPos = _hero.spirit.transform.position;
+        if (!rallyCooldown.heroCommand.isOnCooldown)
+        {
+            _hero.ActionCommanded("rally");
+            _hero.initialSpiritPos = _hero.spirit.transform.position;
+            attackCooldown.UseCommand();
+            rallyCooldown.UseCommand();
+        }
     }
 
     private void StartHeroDodgeorDash(InputAction.CallbackContext context)
     {
-        if (_hero.isMoving)
+        if(!dodgeCooldown.heroCommand.isOnCooldown)
         {
-            _hero.ActionCommanded("dash");
-        }
-        else
-        {
-            _hero.ActionCommanded("dodge");
+            if (_hero.isMoving)
+            {
+                _hero.ActionCommanded("dash");
+            }
+            else
+            {
+                _hero.ActionCommanded("dodge");
+            }
+            dodgeCooldown.UseCommand();
         }
     }
 
     private void StartHeroStandStill(InputAction.CallbackContext context)
     {
-        _hero.ActionCommanded("standstill");
+        if (!standstillCooldown.heroCommand.isOnCooldown)
+        {
+            _hero.ActionCommanded("standstill");
+            standstillCooldown.UseCommand();
+        }
     }
 }

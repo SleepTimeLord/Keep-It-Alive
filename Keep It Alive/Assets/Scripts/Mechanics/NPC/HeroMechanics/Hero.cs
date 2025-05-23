@@ -3,10 +3,10 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Hero : MonoBehaviour, IDamageable, ITriggerCommandable, ITriggerInAttackRangeCheckable
+public class Hero : MonoBehaviour, ITriggerCommandable, ITriggerInAttackRangeCheckable
 {
-    [SerializeField] public float maxHealth { get; set; } = 3f;
-    public float currentHealth { get; set; }
+    public int maxHealth = 20;
+    public int currentHealth;
 
     public string command {  get; set; }
 
@@ -44,6 +44,11 @@ public class Hero : MonoBehaviour, IDamageable, ITriggerCommandable, ITriggerInA
     [SerializeField] private float dodgeTime = .5f;
     private bool dodgeToAttack = false;
 
+    [Header("Cooldown Settings")]
+    public float commandCooldown;
+    public float dodgeCooldown;
+    public float standStillCooldown;
+
     // gets enemy from parent.
     public GameObject enemyContainer;
     #region Mechanic Vars
@@ -63,11 +68,11 @@ public class Hero : MonoBehaviour, IDamageable, ITriggerCommandable, ITriggerInA
         heroDash = new CommandDash(this, heroStateMachine);
         heroChase = new ChaseState(this, heroStateMachine);
     }
-    public void Damage(float damageAmount)
+    public void Damage(int damageAmount)
     {
         currentHealth -= damageAmount;
 
-        if (currentHealth == 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -77,7 +82,7 @@ public class Hero : MonoBehaviour, IDamageable, ITriggerCommandable, ITriggerInA
     {
         heroTransform = GetComponent<Transform>();
         // sets the current health to full and makes sure that the command for the hero is "standstill".
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
         command = "standstill";
 
         // hero standstill is the starting state when the game is run.
