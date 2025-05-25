@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 66514913}
   - component: {fileID: 66514914}
   - component: {fileID: 66514915}
+  - component: {fileID: 66514916}
   m_Layer: 0
   m_Name: BaseBoss
   m_TagString: Enemy
@@ -268,8 +269,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1596a267960ceb74eaf2bf866e34f52b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileType: {fileID: 3956260845499520316, guid: 290b1c76e03a47340bc0eea65f4f7944, type: 3}
+  projectileType: {fileID: 4719678424304322763, guid: 70696d78cfe131c4ba667922fc7c9d46, type: 3}
   enemyProjectileLauchOffset: {fileID: 1602657061}
+  fireAmount: 2
+  repeatDelay: 0.5
+--- !u!114 &66514916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66514911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205b7c2622089e24b99a09c9866f1134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0
+  maxHealh: 10
+  currentHealth: 10
+  attackCooldown: 3
+  randAttack: 0
+  enemyProjectileLauchOffset: {fileID: 1602657061}
+  fireDelayTime: 0
+  projectileTypes:
+  - {fileID: 11400000, guid: bb8ea542d0d9bce40a7139b3ba5f0fd5, type: 2}
+  - {fileID: 11400000, guid: 55b8421198d05584aac3c1b85e2ec9c6, type: 2}
 --- !u!1 &106755455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,12 +1689,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b9af854dfa0ca46af979f7b94401be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
-  currentHealth: 5
   isMoving: 0
   spirit: {fileID: 1864651223}
   initialSpiritPos: {x: 0, y: 0, z: 0}
   cannotBeDamaged: 0
+  maxHealth: 5
+  currentHealth: 5
   intialDashSpeed: 100
   dashSpeed: 100
   intialDashSpeedFalloff: 30

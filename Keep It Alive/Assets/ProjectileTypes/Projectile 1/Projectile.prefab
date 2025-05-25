@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6678011473543446958}
   - component: {fileID: 6151704096213324628}
   - component: {fileID: 9116709934713972269}
-  - component: {fileID: 3956260845499520316}
+  - component: {fileID: 4836864813726084206}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -98,7 +98,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.25
---- !u!114 &3956260845499520316
+--- !u!114 &4836864813726084206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,10 +107,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 850370436674902924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e669fc99f31b75479a2886634b85457, type: 3}
+  m_Script: {fileID: 11500000, guid: 01854c13747e7d24387b9736c63373a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hero: {fileID: 0}
+  typeOfShot: 0
   projectileDamage: 1
   projectileSpeed: 5
 --- !u!1 &5251750876575037287
@@ -123,6 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7692694127929419804}
   - component: {fileID: 8893770533513426920}
+  - component: {fileID: 8078388940940010679}
   m_Layer: 0
   m_Name: ProjectileSprite
   m_TagString: Untagged
@@ -200,3 +201,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8078388940940010679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5251750876575037287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e669fc99f31b75479a2886634b85457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeOfShot: 0
+  projectileDamage: 1
+  projectileSpeed: 4

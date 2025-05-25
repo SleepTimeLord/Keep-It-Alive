@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour, ITriggerCommandable
 {
-    public int maxHealth = 20;
-    public int currentHealth;
+
 
     public string command {  get; set; }
 
@@ -28,6 +27,10 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     public Vector3 initialSpiritPos;
 
     public bool cannotBeDamaged = false;
+
+    [Header("Health Settings")]
+    public int maxHealth = 20;
+    public int currentHealth;
 
     [Header("Dash Settings")]
     public float intialDashSpeed = 100;
@@ -69,7 +72,11 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     }
     public void Damage(int damageAmount)
     {
-        currentHealth -= damageAmount;
+        if (!cannotBeDamaged)
+        {
+            currentHealth -= damageAmount;
+        }
+
 
         if (currentHealth <= 0)
         {

@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class CommandStandStill : HeroState
+public class EnemyAttackTwoState : EnemyState
 {
-    public CommandStandStill(Hero hero, HeroStateMachine heroStateMachine) : base(hero, heroStateMachine)
+    public EnemyAttackTwoState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
-
     }
 
     public override void AnimationTriggerEvent()
@@ -15,7 +14,7 @@ public class CommandStandStill : HeroState
     public override void EnterState()
     {
         base.EnterState();
-        hero.isMoving = false;
+        Debug.Log("entered attack two state");
     }
 
     public override void ExitState()
@@ -26,8 +25,6 @@ public class CommandStandStill : HeroState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-
-        hero.ChangeFromStandStillState();
     }
 
     public override void PhysicsUpdate()

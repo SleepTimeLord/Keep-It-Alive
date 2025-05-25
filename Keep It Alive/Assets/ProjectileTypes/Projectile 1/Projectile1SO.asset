@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598ed6f4000590149a5aaf6190a3bada, type: 3}
+  m_Name: Projectile1SO
+  m_EditorClassIdentifier: 
+  projectileBase: {fileID: 4836864813726084206, guid: 290b1c76e03a47340bc0eea65f4f7944, type: 3}
+  fireAmount: 10
+  fireRate: 0.5
