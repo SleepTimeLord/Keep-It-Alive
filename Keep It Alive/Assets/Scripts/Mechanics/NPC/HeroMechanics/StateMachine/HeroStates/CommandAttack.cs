@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CommandAttack : HeroState
 {
+    private float attackTimer;
+    private Enemy enemy;
     public CommandAttack(Hero hero, HeroStateMachine heroStateMachine) : base(hero, heroStateMachine)
     {
 
@@ -15,8 +17,17 @@ public class CommandAttack : HeroState
     public override void EnterState()
     {
         base.EnterState();
+
+        // finds the enemy gameobject.
+        enemy = GameObject.FindAnyObjectByType<Enemy>();
+
         hero.isMoving = false;
+
         Debug.Log("is in attack state");
+
+        // start intial attack
+        enemy.TakeDamage(hero.damageAmout);
+        attackTimer = hero.attackSpeed;
     }
 
     public override void ExitState()
@@ -29,6 +40,15 @@ public class CommandAttack : HeroState
         base.FrameUpdate();
 
         hero.AttackEnemy();
+
+        attackTimer -= Time.deltaTime;
+
+        if (attackTimer < 0) 
+        {
+            enemy.TakeDamage(hero.damageAmout);
+            Debug.Log("attacked");
+            attackTimer = hero.attackSpeed;
+        }
 
         hero.ChangeFromAttackState();
     }

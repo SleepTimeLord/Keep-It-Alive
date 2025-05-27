@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Rally
   m_EditorClassIdentifier: 
   imageIcon: {fileID: 370204471567345681, guid: 677bc24115ca919418e6f8c6f51b3000, type: 3}
-  imageCooldown: {fileID: 769153180469053252, guid: 200ef013eea45e842b8a92bb8d056d83, type: 3}
-  commandCooldownAmount: 1
+  commandCooldownAmount: 0.5
   isOnCooldown: 0
   typeOfCommand: 0

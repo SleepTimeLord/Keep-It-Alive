@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Hero : MonoBehaviour, ITriggerCommandable
@@ -50,6 +51,10 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     public float commandCooldown;
     public float dodgeCooldown;
     public float standStillCooldown;
+
+    [Header("Attack Settings")]
+    public float attackSpeed = 1f;
+    public int damageAmout = 1;
 
     // gets enemy from parent.
     public GameObject enemyContainer;
@@ -126,6 +131,10 @@ public class Hero : MonoBehaviour, ITriggerCommandable
         command = action;
     }
 
+/*    public Enemy FindEnemy()
+    {
+        return FindAnyObjectByType<Enemy>();
+    }*/
     // this are the mechanics for the hero (standstill, rally, dodge, attack)
     #region Hero Mechanics
 
