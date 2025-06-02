@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // TODO: instead of making a attack one two or three state, make a list of the attacks using scriptable objects
@@ -26,8 +27,10 @@ public class Enemy : MonoBehaviour
     public Transform enemyProjectileLauchOffset;
     public int fireDelayTime;
 
-    [Header("Projectiles")]
+    [Header("Projectiles")] 
     public ProjectileType[] projectileTypes;
+    private Dictionary<GameObject, Queue<GameObject>> _pools;
+    private Queue<GameObject> pool = new Queue<GameObject>();
     private void Awake()
     {
         enemyStateMachine = new EnemyStateMachine();
@@ -58,6 +61,25 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         // enemy dies and player wins
+    }
+
+    // gets object from pool
+/*    public GameObject GetObject()
+    {
+        if (pool.Count > 0)
+        {
+            GameObject obj = pool.Dequeue();
+            obj.SetActive(true);
+            return obj;
+        }
+        return Instantiate(projectileTypes[randAttack].projectile);
+    }*/
+
+    // returns object to pool
+    public void ReturnObject(GameObject obj)
+    {
+        obj.SetActive(false);
+        pool.Enqueue(obj);
     }
 
     // Update is called once per frame

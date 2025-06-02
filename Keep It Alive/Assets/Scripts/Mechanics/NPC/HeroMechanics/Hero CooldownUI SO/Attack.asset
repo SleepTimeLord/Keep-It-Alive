@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Attack
   m_EditorClassIdentifier: 
   imageIcon: {fileID: -7008412969330441016, guid: 790ea3cd0bbde4647b06271fc495662d, type: 3}
-  commandCooldownAmount: 0.5
+  commandCooldownAmount: 0.1
   isOnCooldown: 0
   typeOfCommand: 1

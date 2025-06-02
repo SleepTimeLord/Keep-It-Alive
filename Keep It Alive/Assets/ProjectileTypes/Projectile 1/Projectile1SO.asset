@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598ed6f4000590149a5aaf6190a3bada, type: 3}
   m_Name: Projectile1SO
   m_EditorClassIdentifier: 
-  projectileBase: {fileID: 4836864813726084206, guid: 290b1c76e03a47340bc0eea65f4f7944, type: 3}
+  aimType: 1
+  shootingAction: 0
+  projectile: {fileID: 850370436674902924, guid: 290b1c76e03a47340bc0eea65f4f7944, type: 3}
   fireAmount: 10
   fireRate: 0.5
