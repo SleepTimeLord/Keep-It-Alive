@@ -12,6 +12,8 @@ public class ProjectilePooler : MonoBehaviour
         public GameObject prefab;
     }
 
+    //public IBulletMovement bulletMoveChosen = new StraightBulletMovement();
+
     #region Singleton
 
     public static ProjectilePooler Instance;

@@ -1551,7 +1551,7 @@ GameObject:
   - component: {fileID: 1234178228}
   - component: {fileID: 1234178229}
   m_Layer: 0
-  m_Name: Projectile  Pooler
+  m_Name: Projectile Pooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1586,7 +1586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pools:
   - tag: redObject
-    prefab: {fileID: 850370436674902924, guid: 290b1c76e03a47340bc0eea65f4f7944, type: 3}
+    prefab: {fileID: 500221368878349322, guid: 2be513c683cdcbb4bbf1bf80ffe21be0, type: 3}
 --- !u!1 &1602657060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,6 +1631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb992c6596a235142bc573fd10fe82b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileMovement: {fileID: 11400000, guid: 5645fcb01f572bd4c830e5e0c360efb1, type: 2}
   projectileSpeed: 5
 --- !u!1 &1648318384
 GameObject:

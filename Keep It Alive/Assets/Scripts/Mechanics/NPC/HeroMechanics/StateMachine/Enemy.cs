@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
         enemyAttackTwoState = new EnemyAttackTwoState(this, enemyStateMachine);
         enemyTeleportState = new EnemyTeleportState(this,enemyStateMachine);
     }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -61,25 +62,6 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         // enemy dies and player wins
-    }
-
-    // gets object from pool
-/*    public GameObject GetObject()
-    {
-        if (pool.Count > 0)
-        {
-            GameObject obj = pool.Dequeue();
-            obj.SetActive(true);
-            return obj;
-        }
-        return Instantiate(projectileTypes[randAttack].projectile);
-    }*/
-
-    // returns object to pool
-    public void ReturnObject(GameObject obj)
-    {
-        obj.SetActive(false);
-        pool.Enqueue(obj);
     }
 
     // Update is called once per frame

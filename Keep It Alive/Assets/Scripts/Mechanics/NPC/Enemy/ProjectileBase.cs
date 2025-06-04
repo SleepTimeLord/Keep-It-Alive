@@ -1,46 +1,38 @@
 using UnityEngine;
 
-public enum TypeOfShot
-{
-    straight,
-    circle,
-}
 public class ProjectileBase : MonoBehaviour
 {
-    public TypeOfShot typeOfShot;
     private Hero _hero;
-    private Enemy _enemy;
     [Header("Projectile Settings")]
     public int projectileDamage;
-    public int projectileSpeed;
+    public float projectileSpeed;
+/*    public float waveFrequency;
+    // keep the amplitude < 1
+    public float waveAmplitude;*/
     ProjectilePooler _pooler;
+    public IProjectileMovement _bulletMovementType;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _pooler = ProjectilePooler.Instance;
         _hero = FindAnyObjectByType<Hero>();
-        _enemy = FindAnyObjectByType<Enemy>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // shoot 
-        transform.position += -transform.right * Time.deltaTime * projectileSpeed;
-
+        _bulletMovementType.Move(this);
 
         Vector3 viewPoint = Camera.main.WorldToViewportPoint(transform.position);
-        // NOTE: this might be the problem i think
+
         bool isVisible = viewPoint.z > 0 && viewPoint.x >= 0 && viewPoint.x <= 1 && viewPoint.y >= 0 && viewPoint.y <= 1;
 
-/*        if (!isVisible)
+        if (!isVisible)
         {
-            if (gameObject != null)
-            {
-               _pooler.ReturnProjectile("redObject");
-            }
-        }*/
+            _pooler.ReturnProjectile(this.gameObject, "redObject");
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

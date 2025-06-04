@@ -1,19 +1,7 @@
 using UnityEngine;
 
-
-/*public enum AimType
-{
-    intialFollow,
-    continuousFollow,
-    noFollow
-}
-*/
-/*public enum ActionsWhileShooting
-{
-    randomTeleport,
-    circleTeleport,
-    noAction
-}*/
+// TODO: Edit this script so that it takes in IBulletPattern and lists the specifics of what vars they need
+// this includes the fireAmount and fireRate
 
 public enum TypeofProjectile
 {
@@ -26,8 +14,9 @@ public enum TypeofProjectile
 
 public class ProjectileType : ScriptableObject
 {
-/*    public AimType aimType;
-    public ActionsWhileShooting shootingAction;*/
+    /*    public AimType aimType;
+        public ActionsWhileShooting shootingAction;*/
+    public IBulletPattern bulletPattern;
     public TypeofProjectile projectileType;
     public Sprite projectileImage;
     public int fireAmount;
