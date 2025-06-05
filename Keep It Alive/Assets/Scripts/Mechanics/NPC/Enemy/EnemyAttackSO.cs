@@ -11,14 +11,10 @@ public enum TypeofProjectile
 
 
 [CreateAssetMenu(menuName = "Scriptable Objects/MakeProjectile")]
-
-public class ProjectileType : ScriptableObject
+public class EnemyAttackSO : ScriptableObject
 {
-    /*    public AimType aimType;
-        public ActionsWhileShooting shootingAction;*/
-    public IBulletPattern bulletPattern;
-    public TypeofProjectile projectileType;
-    public Sprite projectileImage;
+    public ProjectileMovementSO projectileMovement;
+    public ProjectilePatternSO projectilePattern;
     public int fireAmount;
     public float fireRate;
 }

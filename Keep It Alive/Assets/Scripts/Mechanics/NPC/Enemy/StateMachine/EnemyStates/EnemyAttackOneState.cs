@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttackOneState : EnemyState
 {
-    private ProjectileType _projectileType;
+    private EnemyAttackSO enemyAttack;
     private int amountFired;
     private Hero hero;
     private Queue<GameObject> pool = new Queue<GameObject>();
@@ -20,7 +20,7 @@ public class EnemyAttackOneState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        _projectileType = enemy.projectileTypes[enemy.randAttack];
+        enemyAttack = enemy.enemyAttackList[enemy.randAttack];
 
         // turns to look at the hero position
         hero = GameObject.FindAnyObjectByType<Hero>();

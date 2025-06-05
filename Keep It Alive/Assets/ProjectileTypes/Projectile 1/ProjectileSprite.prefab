@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6391071327627339623}
   - component: {fileID: 5980202658587111086}
   - component: {fileID: 5867056714336725379}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ProjectileSprite
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,11 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01854c13747e7d24387b9736c63373a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeOfShot: 0
   projectileDamage: 1
   projectileSpeed: 10
-  waveFrequency: 2
-  waveAmplitude: 1
 --- !u!50 &5867056714336725379
 Rigidbody2D:
   serializedVersion: 5

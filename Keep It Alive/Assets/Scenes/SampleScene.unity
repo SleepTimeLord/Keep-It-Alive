@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 66514913}
   - component: {fileID: 66514914}
   - component: {fileID: 66514916}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BaseBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -711,7 +711,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 474787970}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1597,7 +1597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1602657061}
   - component: {fileID: 1602657062}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ProjectileOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1632,6 +1632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileMovement: {fileID: 11400000, guid: 5645fcb01f572bd4c830e5e0c360efb1, type: 2}
+  projectilePattern: {fileID: 11400000, guid: f645333b7a9808647af932d9b8644a5a, type: 2}
   projectileSpeed: 5
 --- !u!1 &1648318384
 GameObject:
@@ -1905,7 +1906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1745491890}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FrontofBoss
   m_TagString: EnemyAttackPos
   m_Icon: {fileID: 0}

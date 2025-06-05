@@ -1,17 +1,24 @@
+using NUnit.Framework;
 using UnityEngine;
 
-public class SingleShotPattern : IBulletPattern
+[CreateAssetMenu(menuName = "Projectile/Pattern/Single")]
+public class SingleShotPatternSO : ProjectilePatternSO
 {
+    public override IProjectilePattern CreatePattern()
+    {
+        return new SingleShotPattern();
+    }
+}
 
+public class SingleShotPattern : IProjectilePattern
+{
     // we do this to get the specifics
     // to use this we reference this in another script
-    public SingleShotPattern()
-    {
+    public SingleShotPattern() { }
 
-    }
-
-    public void BulletPattern(ProjectilePooler pooler, Transform projectileSpawn, IProjectileMovement projectileMovementType, string bulletTag, float projectileSpeed, int projectileDamage)
+    public void ProjectilePattern(ProjectilePooler pooler, Transform projectileSpawn, IProjectileMovement projectileMovementType, string bulletTag, float projectileSpeed, int projectileDamage)
     {
+        Debug.Log("this was called");
         // spawns specific bullet from projectileSpawn
         GameObject projectile = pooler.SpawnFromPool(bulletTag);
 

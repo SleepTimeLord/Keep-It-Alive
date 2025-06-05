@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     public int fireDelayTime;
 
     [Header("Projectiles")] 
-    public ProjectileType[] projectileTypes;
+    public EnemyAttackSO[] enemyAttackList;
     private Dictionary<GameObject, Queue<GameObject>> _pools;
     private Queue<GameObject> pool = new Queue<GameObject>();
     private void Awake()
