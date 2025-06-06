@@ -16,12 +16,14 @@ public class CommandDash : HeroState
     {
         base.EnterState();
         hero.cannotBeDamaged = true;
+        hero.ChangeLayerToDash();
     }
 
     public override void ExitState()
     {
         base.ExitState();
         hero.cannotBeDamaged = false;
+        hero.ChangeLayerToHero();
     }
 
     public override void FrameUpdate()

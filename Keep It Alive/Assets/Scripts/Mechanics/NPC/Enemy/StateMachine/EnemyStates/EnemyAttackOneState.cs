@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using UnityEditor.SpeedTree.Importer;
 using UnityEngine;
+using static ProjectilePooler;
 
 public class EnemyAttackOneState : EnemyState
 {
     private EnemyAttackSO enemyAttack;
     private int amountFired;
     private Hero hero;
-    private Queue<GameObject> pool = new Queue<GameObject>();
+    private IProjectilePattern pattern;
+    private IProjectileMovement movement;
     public EnemyAttackOneState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
     }
@@ -20,24 +22,34 @@ public class EnemyAttackOneState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+        // gets a random attack from the list
         enemyAttack = enemy.enemyAttackList[enemy.randAttack];
+
+        if (enemyAttack == null )
+        {
+            Debug.LogError("No enemy attack in list! going back to idle state");
+            enemy.enemyStateMachine.ChangeState(enemy.enemyIdleState);
+        }
+
+        pattern = enemyAttack.projectilePattern.CreatePattern();
+        movement = enemyAttack.projectileMovement.CreateMovement();
 
         // turns to look at the hero position
         hero = GameObject.FindAnyObjectByType<Hero>();
         Transform heroTransform = hero.transform;
 
-/*        if (_projectileType.aimType== AimType.intialFollow)
+        if (enemyAttack.trackingType == TrackingType.initialTracking)
         {
             Vector3 diff = hero.transform.position - enemy.transform.position;
             diff.Normalize();
             float rot_Z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
             enemy.transform.rotation = Quaternion.Euler(0, 0, rot_Z - 180);
-        }*/
+        }
 
         // initial fire 
-/*        GameObject.Instantiate(_projectileType.projectile.transform, enemy.enemyProjectileLauchOffset.position, enemy.enemyProjectileLauchOffset.rotation);
+        pattern.ProjectilePattern(enemy.projectilePooler, enemy.enemyProjectileLauchOffset, movement, enemyAttack.projectileTag, enemyAttack.projectileSpeed, enemyAttack.projectileDamage);
         amountFired++;
-        enemy.timer = _projectileType.fireRate;*/
+        enemy.timer = enemyAttack.fireRate;
 
     }
 
@@ -50,14 +62,14 @@ public class EnemyAttackOneState : EnemyState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-/*
-        if (_projectileType.aimType == AimType.continuousFollow)
+
+/*        if (enemyAttack.trackingType == TrackingType.continuedTracking)
         {
             Vector3 diff = hero.transform.position - enemy.transform.position;
             diff.Normalize();
             float rot_Z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
             enemy.transform.rotation = Quaternion.Euler(0, 0, rot_Z - 180);
-        }
+        }*/
 
         // do cooldown
         enemy.timer -= Time.deltaTime;
@@ -65,22 +77,22 @@ public class EnemyAttackOneState : EnemyState
         if (enemy.timer < 0)
         {
             // instantiates then resets the timer so it can fire again.
-            if (_projectileType.aimType == AimType.continuousFollow)
+            if (enemyAttack.trackingType == TrackingType.continuedTracking)
             {
                 Vector3 diff = hero.transform.position - enemy.transform.position;
                 diff.Normalize();
                 float rot_Z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
                 enemy.transform.rotation = Quaternion.Euler(0, 0, rot_Z - 180);
             }
-            GameObject.Instantiate(_projectileType.projectile.transform, enemy.enemyProjectileLauchOffset.position, enemy.enemyProjectileLauchOffset.rotation);
-            enemy.timer = _projectileType.fireRate;
+            pattern.ProjectilePattern(enemy.projectilePooler, enemy.enemyProjectileLauchOffset, movement, enemyAttack.projectileTag, enemyAttack.projectileSpeed, enemyAttack.projectileDamage);
+            enemy.timer = enemyAttack.fireRate;
             amountFired++;
         }
 
-        if (amountFired == _projectileType.fireAmount)
+        if (amountFired == enemyAttack.fireAmount)
         {
             enemy.enemyStateMachine.ChangeState(enemy.enemyIdleState);
-        }*/
+        }
     }
 
     public override void PhysicsUpdate()

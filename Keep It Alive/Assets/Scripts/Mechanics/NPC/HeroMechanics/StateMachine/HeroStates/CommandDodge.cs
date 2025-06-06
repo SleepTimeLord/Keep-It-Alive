@@ -15,7 +15,7 @@ public class CommandDodge : HeroState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("is in dodge state");
+        hero.tag = "Dodge";
         // starts the cooldown when enter the state
         hero.dodgeTimer = hero.dodgeTime;
         hero.cannotBeDamaged = true;
@@ -25,6 +25,7 @@ public class CommandDodge : HeroState
     {
         base.ExitState();
         hero.cannotBeDamaged = false;
+        hero.tag = "Hero";
     }
 
     public override void FrameUpdate()

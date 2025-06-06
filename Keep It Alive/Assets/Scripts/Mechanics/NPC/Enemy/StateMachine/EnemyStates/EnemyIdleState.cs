@@ -15,12 +15,10 @@ public class EnemyIdleState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Entered idle state");
         // starts timer before it moves to another scene
         enemy.timer = enemy.attackCooldown;
         // gets random int to switch to a specific scene
-        enemy.randAttack = Random.Range(0, 2);
-        Debug.Log($"This is what attack it's switching to: {enemy.randAttack}");
+        enemy.randAttack = Random.Range(0, enemy.enemyAttackList.Length);
     }
 
     public override void ExitState()

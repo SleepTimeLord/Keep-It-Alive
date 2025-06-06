@@ -18,7 +18,6 @@ public class SingleShotPattern : IProjectilePattern
 
     public void ProjectilePattern(ProjectilePooler pooler, Transform projectileSpawn, IProjectileMovement projectileMovementType, string bulletTag, float projectileSpeed, int projectileDamage)
     {
-        Debug.Log("this was called");
         // spawns specific bullet from projectileSpawn
         GameObject projectile = pooler.SpawnFromPool(bulletTag);
 

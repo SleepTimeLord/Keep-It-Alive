@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour
     public EnemyIdleState enemyIdleState;
     // does attack then switches to idle
     public EnemyAttackOneState enemyAttackOneState;
-    public EnemyAttackTwoState enemyAttackTwoState;
     // if player is too close, it teleports away.
     public EnemyTeleportState enemyTeleportState;
     #endregion
@@ -29,8 +28,9 @@ public class Enemy : MonoBehaviour
 
     [Header("Projectiles")] 
     public EnemyAttackSO[] enemyAttackList;
-    private Dictionary<GameObject, Queue<GameObject>> _pools;
-    private Queue<GameObject> pool = new Queue<GameObject>();
+    public ProjectilePooler projectilePooler;
+
+    [HideInInspector] public int attackCount;
     private void Awake()
     {
         enemyStateMachine = new EnemyStateMachine();
@@ -38,7 +38,6 @@ public class Enemy : MonoBehaviour
         // set up the instance by making the variable be equal to a new instance of each state
         enemyIdleState = new EnemyIdleState(this,enemyStateMachine);
         enemyAttackOneState = new EnemyAttackOneState(this, enemyStateMachine);
-        enemyAttackTwoState = new EnemyAttackTwoState(this, enemyStateMachine);
         enemyTeleportState = new EnemyTeleportState(this,enemyStateMachine);
     }
 

@@ -24,6 +24,7 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     public bool isMoving = false;
 
     private Transform heroTransform;
+    public GameObject heroGameObject;
     public GameObject spirit;
     public Vector3 initialSpiritPos;
 
@@ -92,13 +93,13 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     private void Start()
     {
         heroTransform = GetComponent<Transform>();
+        heroGameObject = GetComponent<GameObject>();
         // sets the current health to full and makes sure that the command for the hero is "standstill".
         //currentHealth = maxHealth;
         command = "standstill";
 
         // hero standstill is the starting state when the game is run.
         heroStateMachine.Initialize(heroStandStill);
-
     }
 
     private void Update()
@@ -332,6 +333,16 @@ public class Hero : MonoBehaviour, ITriggerCommandable
         heroTransform.position += dashDir * dashSpeed * Time.deltaTime;
 
         dashSpeed -= dashSpeed * dashSpeedFalloff * Time.deltaTime;
+    }
+
+    public void ChangeLayerToDash()
+    {
+        gameObject.layer = 8;
+    }
+
+    public void ChangeLayerToHero()
+    {
+        gameObject.layer = 3;
     }
     #endregion
 

@@ -8,17 +8,19 @@ TagManager:
   - EnemyAttackPos
   - Hero
   - Bullet
+  - Dodge
+  - ParriedBullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Hero
   - Water
   - UI
   - Bullet
   - Enemy
-  - 
-  - 
+  - Dash
+  - ParriedBullet
   - 
   - 
   - 
