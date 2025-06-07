@@ -18,5 +18,5 @@ MonoBehaviour:
   trackingType: 0
   projectileSpeed: 5
   projectileDamage: 1
-  fireAmount: 3
-  fireRate: 1
+  fireAmount: 4
+  fireRate: 0.5

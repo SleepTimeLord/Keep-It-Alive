@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Hero : MonoBehaviour, ITriggerCommandable
 {
@@ -136,7 +137,14 @@ public class Hero : MonoBehaviour, ITriggerCommandable
         heroRenderer.sprite = die;
         spiritRenderer.sprite = spiritCry;
         this.enabled = false;
+        StartCoroutine(LoseScreen());
 
+    }
+
+    IEnumerator LoseScreen()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("LoseScene");
     }
 
     // this fuct will be used to determine which hero state to switch to.

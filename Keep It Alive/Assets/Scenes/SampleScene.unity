@@ -2004,84 +2004,11 @@ MonoBehaviour:
   attackCooldown: {fileID: 973556456}
   dodgeCooldown: {fileID: 1870231045}
   standstillCooldown: {fileID: 2063459967}
---- !u!1 &1447811726 stripped
+--- !u!1 &1481513970 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 7826465440526988984, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1148206426481749695, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
   m_PrefabInstance: {fileID: 2545013623488388127}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1447811727 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2471187800161568091, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
-  m_PrefabInstance: {fileID: 2545013623488388127}
-  m_PrefabAsset: {fileID: 0}
---- !u!70 &1447811731
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1447811726}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.13999999, y: 0.15999998}
-  m_Direction: 0
---- !u!1 &1481513970
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1481513971}
-  m_Layer: 7
-  m_Name: FrontofBoss (1)
-  m_TagString: EnemyAttackPos
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1481513971
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1481513970}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1447811727}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1671934391
 GameObject:
   m_ObjectHideFlags: 0
@@ -5231,8 +5158,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1234178229}
     - target: {fileID: 4724764535770139287, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
+      propertyPath: enemyAttackList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724764535770139287, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
+      propertyPath: 'enemyAttackList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e9ab66d3f1a4b8f42aa7198a41321594, type: 2}
+    - target: {fileID: 4724764535770139287, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
       propertyPath: enemyAttackListMiddle.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4724764535770139287, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
       propertyPath: 'enemyAttackListMiddle.Array.data[0]'
@@ -5242,6 +5177,10 @@ PrefabInstance:
       propertyPath: 'enemyAttackListMiddle.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: 636909d34fe0ff645906d63dd49bf024, type: 2}
+    - target: {fileID: 4724764535770139287, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
+      propertyPath: 'enemyAttackListMiddle.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e9ab66d3f1a4b8f42aa7198a41321594, type: 2}
     - target: {fileID: 6808928227251240209, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.38
@@ -5302,17 +5241,10 @@ PrefabInstance:
       propertyPath: projectileMovement
       value: 
       objectReference: {fileID: 11400000, guid: d29e9bffc5d368240a77a05540ee66ea, type: 2}
-    m_RemovedComponents:
-    - {fileID: 3728322416240255050, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2471187800161568091, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1481513971}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7826465440526988984, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1447811731}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbb388f8c0204aa46b912886c1887999, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

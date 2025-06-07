@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static EnemyTeleportState;
 
 public enum CurrentPosition
@@ -107,6 +109,13 @@ public class Enemy : MonoBehaviour
         m_Renderer.sprite = dead;
         this.enabled = false;
         // enemy dies and player wins
+        StartCoroutine(WinScreen());
+    }
+
+    IEnumerator WinScreen()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("WinScene");
     }
 
     public void GetLayer(int layer)
