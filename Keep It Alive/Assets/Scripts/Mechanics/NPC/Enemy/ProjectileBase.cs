@@ -26,7 +26,6 @@ public class ProjectileBase : MonoBehaviour
     }
     private void OnDisable()
     {
-        Debug.Log("the bullet was disabled");
         gotParried = false;
     }
 
@@ -39,7 +38,8 @@ public class ProjectileBase : MonoBehaviour
         {
             gameObject.tag = "ParriedBullet";
             gameObject.layer = 9;
-            _bulletMovementType = parriedMovement.CreateMovement();
+            //_bulletMovementType = parriedMovement.CreateMovement();
+            _bulletMovementType = new ProjectileParriedMovement(_enemy.transform, 20);
         }
 
         Vector3 viewPoint = Camera.main.WorldToViewportPoint(transform.position);

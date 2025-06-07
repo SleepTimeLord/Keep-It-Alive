@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e0b7b9f056892489849b2c62b4cac0, type: 3}
   m_Name: Wall
   m_EditorClassIdentifier: 
-  projectileAmount: 10
+  projectileAmount: 20
   spreadAngle: 0
   projectileSpacing: 1

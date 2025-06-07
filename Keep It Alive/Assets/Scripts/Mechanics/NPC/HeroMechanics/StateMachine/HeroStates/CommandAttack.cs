@@ -45,9 +45,14 @@ public class CommandAttack : HeroState
 
         if (attackTimer < 0) 
         {
+            hero.heroRenderer.sprite = hero.attack;
             enemy.TakeDamage(hero.damageAmout);
             Debug.Log("attacked");
             attackTimer = hero.attackSpeed;
+        }
+        else
+        {
+            hero.heroRenderer.sprite = hero.idle;
         }
 
         hero.ChangeFromAttackState();

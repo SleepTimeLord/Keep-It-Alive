@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Dodge
   m_EditorClassIdentifier: 
   imageIcon: {fileID: -4693932192084691647, guid: 06a0e654a6730bf4688d6010259f4dbf, type: 3}
-  imageCooldown: {fileID: 8824919786584570252, guid: f9a20a44bf17fdb4888370028702892b, type: 3}
-  commandCooldownAmount: 1
+  commandCooldownAmount: 0.5
   isOnCooldown: 0
   typeOfCommand: 2

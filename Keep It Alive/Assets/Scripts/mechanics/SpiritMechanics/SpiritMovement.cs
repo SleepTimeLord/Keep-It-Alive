@@ -1,12 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class SpiritMovement : MonoBehaviour
 {
     [SerializeField]
     private InputActionReference teleport, cursorPosition;
     private Transform spirit;
+    private Hero hero;
+    private SpriteRenderer spriteRenderer;
 
     [Header("Movement Settings")]
     public float teleportCooldown = 1;
@@ -26,6 +29,20 @@ public class SpiritMovement : MonoBehaviour
     void Start()
     {
         spirit = GetComponent<Transform>();
+        hero = FindAnyObjectByType<Hero>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    private void Update()
+    {
+        Vector3 diff = hero.transform.position - transform.position;
+        diff.Normalize();
+        float rot_Z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, rot_Z - 180);
+
+        // get the Z-rotation in degrees (0 → 360)
+        float zAngle = transform.eulerAngles.z;
+
+        spriteRenderer.flipY = (zAngle > 90f && zAngle < 270f);
     }
 
     // tps the spirit to cursor position

@@ -24,7 +24,10 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     public bool isMoving = false;
 
     private Transform heroTransform;
-    public GameObject heroGameObject;
+    private Enemy enemy;
+    [HideInInspector] public GameObject heroGameObject;
+    [HideInInspector]public SpriteRenderer heroRenderer;
+    public SpriteRenderer spiritRenderer;
     public GameObject spirit;
     public Vector3 initialSpiritPos;
 
@@ -56,7 +59,19 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     [Header("Attack Settings")]
     public float attackSpeed = 1f;
     public int damageAmout = 1;
+    public GameObject enemyAttackPos1;
+    public GameObject enemyAttackPos2;
 
+    [Header("Sprite Settings")]
+    public Sprite idle;
+    public Sprite die;
+    public Sprite run;
+    public Sprite parry;
+    public Sprite dash;
+    public Sprite attack;
+    public Sprite spiritCry;
+    public Sprite spiritIdle;
+    public Sprite spiritCommand;
     // gets enemy from parent.
     public GameObject enemyContainer;
     #region Mechanic Vars
@@ -93,7 +108,9 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     private void Start()
     {
         heroTransform = GetComponent<Transform>();
+        heroRenderer = GetComponent<SpriteRenderer>();
         heroGameObject = GetComponent<GameObject>();
+        enemy = FindAnyObjectByType<Enemy>();
         // sets the current health to full and makes sure that the command for the hero is "standstill".
         //currentHealth = maxHealth;
         command = "standstill";
@@ -106,14 +123,6 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     {
         heroStateMachine.CurrentHeroState.FrameUpdate();
 
-        if (cannotBeDamaged)
-        {
-            this.gameObject.GetComponent<Renderer>().material.color = Color.white;
-        }
-        else
-        {
-            this.gameObject.GetComponent<Renderer>().material.color = Color.blue;
-        }
     }
 
     private void FixedUpdate()
@@ -124,6 +133,10 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     public void Die()
     {
         // Hero dies and it plays the death screen
+        heroRenderer.sprite = die;
+        spiritRenderer.sprite = spiritCry;
+        this.enabled = false;
+
     }
 
     // this fuct will be used to determine which hero state to switch to.
@@ -131,17 +144,13 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     {
         command = action;
     }
-
-/*    public Enemy FindEnemy()
-    {
-        return FindAnyObjectByType<Enemy>();
-    }*/
-    // this are the mechanics for the hero (standstill, rally, dodge, attack)
     #region Hero Mechanics
 
     #region Stand Still
     public void ChangeFromStandStillState()
     {
+        heroRenderer.sprite = idle;
+        spiritRenderer.sprite = spiritIdle;
         switch (command)
         {
             case "chase":
@@ -160,7 +169,17 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     #region Chase
     public GameObject GetEnemyGameObject()
     {
-        return GameObject.FindGameObjectWithTag("EnemyAttackPos");
+        float distance1 = Vector3.Distance(transform.position, enemyAttackPos1.transform.position);
+        float distance2 = Vector3.Distance(transform.position, enemyAttackPos2.transform.position);
+
+        if (distance1 < distance2) 
+        { 
+            return enemyAttackPos1 ;
+        }
+        else
+        {
+            return enemyAttackPos2 ;
+        }
     }
     public bool IsInAttackPos()
     {
@@ -178,20 +197,37 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     // chases the enemy until in attack range then attacks.
     public void ChaseEnemy()
     {
-        if (GetEnemyGameObject() != null)
+        if (!enemy.isInTeleportState)
         {
-            Transform enemyTransform = GetEnemyGameObject().transform;
-            heroTransform.position = Vector3.MoveTowards(heroTransform.position, enemyTransform.position, Time.deltaTime * heroSpeed);
-
-            if (IsInAttackPos())
+            spiritRenderer.sprite = spiritCommand;
+            heroRenderer.sprite = run;
+            if (GetEnemyGameObject() != null)
             {
-                command = "attack";
-                heroStateMachine.ChangeState(heroAttack);
+                Vector2 direction = enemy.transform.position - transform.position;
+
+                if (direction.x > 0.01f)
+                    heroRenderer.flipX = true; // Facing right
+                else if (direction.x < -0.01f)
+                    heroRenderer.flipX = false;  // Facing left
+
+                Transform enemyTransform = GetEnemyGameObject().transform;
+                heroTransform.position = Vector3.MoveTowards(heroTransform.position, enemyTransform.position, Time.deltaTime * heroSpeed);
+
+                if (IsInAttackPos())
+                {
+                    command = "attack";
+                    heroStateMachine.ChangeState(heroAttack);
+                }
+            }
+            else
+            {
+                // happens if there is no enemy
+                command = "standstill";
+                heroStateMachine.ChangeState(heroStandStill);
             }
         }
         else
         {
-            // happens if there is no enemy
             command = "standstill";
             heroStateMachine.ChangeState(heroStandStill);
         }
@@ -216,6 +252,7 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     // finds the enemy and places a marker for the hero to attack that spot once it gets close enough to the enemy position
     public void AttackEnemy()
     {
+        spiritRenderer.sprite = spiritCommand;
         // attacks enemy
         // if not in range, it goes to standstill state until says so
         if (!IsInAttackPos())
@@ -246,6 +283,16 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     // goes to the position of the spirit and keeps following
     public void Rally()
     {
+        spiritRenderer.sprite = spiritCommand;
+
+        heroRenderer.sprite = run;
+        Vector2 direction = initialSpiritPos - transform.position;
+
+        if (direction.x > 0.01f)
+            heroRenderer.flipX = true; // Facing right
+        else if (direction.x < -0.01f)
+            heroRenderer.flipX = false;  // Facing left
+
         heroTransform.position = Vector3.MoveTowards(heroTransform.position, initialSpiritPos, Time.deltaTime * heroSpeed);
 
         if (heroTransform.position == initialSpiritPos)
@@ -273,6 +320,8 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     // dodges in place
     public void Dodge()
     {
+        spiritRenderer.sprite = spiritCommand;
+        heroRenderer.sprite = parry;
         // this applies the cooldown
         dodgeTimer -= Time.deltaTime;
 
@@ -296,6 +345,8 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     #region Dash
     public void DashtoEnemyorRally()
     {
+        spiritRenderer.sprite = spiritCommand;
+        heroRenderer.sprite = dash;
         if (dashingToRally)
         {
             Transform spiritTransform = spirit.transform;

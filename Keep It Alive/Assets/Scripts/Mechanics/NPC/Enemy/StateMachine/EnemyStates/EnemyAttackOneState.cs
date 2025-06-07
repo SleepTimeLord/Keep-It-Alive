@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor.SpeedTree.Importer;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static ProjectilePooler;
 
 public class EnemyAttackOneState : EnemyState
@@ -22,8 +23,23 @@ public class EnemyAttackOneState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        // gets a random attack from the list
-        enemyAttack = enemy.enemyAttackList[enemy.randAttack];
+        // gets a random attack from the list and changes attack to differnet attack depending on if its on the mdidle 
+        // resets the rotation or enemy;
+        switch (enemy.currentPosition)
+        {
+            case CurrentPosition.right:
+                enemy.transform.rotation = Quaternion.Euler(0,0,0);
+                enemyAttack = enemy.enemyAttackList[enemy.randAttack];
+                break;
+            case CurrentPosition.left:
+                enemy.transform.rotation = Quaternion.Euler(0, 0, -180);
+                enemyAttack = enemy.enemyAttackList[enemy.randAttack];
+                break;
+            case CurrentPosition.middle:
+                enemy.transform.rotation = Quaternion.Euler(0, 0, 0);
+                enemyAttack = enemy.enemyAttackListMiddle[enemy.randAttack];
+                break;
+        }
 
         if (enemyAttack == null )
         {
@@ -37,39 +53,18 @@ public class EnemyAttackOneState : EnemyState
         // turns to look at the hero position
         hero = GameObject.FindAnyObjectByType<Hero>();
         Transform heroTransform = hero.transform;
-
-        if (enemyAttack.trackingType == TrackingType.initialTracking)
-        {
-            Vector3 diff = hero.transform.position - enemy.transform.position;
-            diff.Normalize();
-            float rot_Z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            enemy.transform.rotation = Quaternion.Euler(0, 0, rot_Z - 180);
-        }
-
-        // initial fire 
-        pattern.ProjectilePattern(enemy.projectilePooler, enemy.enemyProjectileLauchOffset, movement, enemyAttack.projectileTag, enemyAttack.projectileSpeed, enemyAttack.projectileDamage);
-        amountFired++;
-        enemy.timer = enemyAttack.fireRate;
-
     }
 
     public override void ExitState()
     {
         base.ExitState();
         amountFired = 0;
+        enemy.damageCount = 0;
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-
-/*        if (enemyAttack.trackingType == TrackingType.continuedTracking)
-        {
-            Vector3 diff = hero.transform.position - enemy.transform.position;
-            diff.Normalize();
-            float rot_Z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            enemy.transform.rotation = Quaternion.Euler(0, 0, rot_Z - 180);
-        }*/
 
         // do cooldown
         enemy.timer -= Time.deltaTime;
@@ -84,7 +79,16 @@ public class EnemyAttackOneState : EnemyState
                 float rot_Z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
                 enemy.transform.rotation = Quaternion.Euler(0, 0, rot_Z - 180);
             }
-            pattern.ProjectilePattern(enemy.projectilePooler, enemy.enemyProjectileLauchOffset, movement, enemyAttack.projectileTag, enemyAttack.projectileSpeed, enemyAttack.projectileDamage);
+            if (enemyAttack == enemy.middleAttack)
+            {
+                pattern.ProjectilePattern(enemy.projectilePooler, enemy.transform, movement, enemyAttack.projectileTag, enemyAttack.projectileSpeed, enemyAttack.projectileDamage);
+                enemy.m_Renderer.sprite = enemy.spread;
+            }
+            else
+            {
+                pattern.ProjectilePattern(enemy.projectilePooler, enemy.enemyProjectileLauchOffset, movement, enemyAttack.projectileTag, enemyAttack.projectileSpeed, enemyAttack.projectileDamage);
+                enemy.m_Renderer.sprite = enemy.attack;
+            }
             enemy.timer = enemyAttack.fireRate;
             amountFired++;
         }
@@ -92,6 +96,12 @@ public class EnemyAttackOneState : EnemyState
         if (amountFired == enemyAttack.fireAmount)
         {
             enemy.enemyStateMachine.ChangeState(enemy.enemyIdleState);
+        }
+
+        if (enemy.damageCount >= 2)
+        {
+            enemy.enemyStateMachine.ChangeState(enemy.enemyTeleportState);
+            enemy.damageCount = 0;
         }
     }
 

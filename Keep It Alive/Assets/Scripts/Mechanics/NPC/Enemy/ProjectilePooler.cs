@@ -55,7 +55,6 @@ public class ProjectilePooler : MonoBehaviour
         if (objectPool.Count > 0)
         {
             // reuse a disable instance of the gameobject
-            Debug.Log("spawned projectile");
             GameObject objectToSpawn = objectPool.Dequeue();
             objectToSpawn.SetActive(true);
             return objectToSpawn;
