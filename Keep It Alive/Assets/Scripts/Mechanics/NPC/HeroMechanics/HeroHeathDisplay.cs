@@ -1,9 +1,5 @@
-using Microsoft.Unity.VisualStudio.Editor;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
-
 public class HeroHeathDisplay : MonoBehaviour
 {
     [Header("Hearts Setup")]

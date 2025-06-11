@@ -1,7 +1,4 @@
-using JetBrains.Annotations;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -145,6 +142,18 @@ public class Hero : MonoBehaviour, ITriggerCommandable
     {
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene("LoseScene");
+    }
+
+    public void AnimationTriggerEvent(AnimationTriggerType tiggerType)
+    {
+
+    }
+
+    public enum AnimationTriggerType
+    {
+        HeroIdle,
+        HeroAttack,
+        HeroRun
     }
 
     // this fuct will be used to determine which hero state to switch to.
@@ -373,7 +382,6 @@ public class Hero : MonoBehaviour, ITriggerCommandable
         }
         else
         {
-            print("dash to enemy");
             Transform enemyTransform = GetEnemyGameObject().transform;
             dashDir = (enemyTransform.position - heroTransform.position).normalized;
 

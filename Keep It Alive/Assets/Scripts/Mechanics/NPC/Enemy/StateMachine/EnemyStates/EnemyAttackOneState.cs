@@ -1,9 +1,4 @@
-using System.Collections.Generic;
-using UnityEditor.SpeedTree.Importer;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static ProjectilePooler;
-
 public class EnemyAttackOneState : EnemyState
 {
     private EnemyAttackSO enemyAttack;

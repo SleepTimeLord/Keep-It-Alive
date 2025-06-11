@@ -1,12 +1,5 @@
-using Microsoft.Unity.VisualStudio.Editor;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
-using UnityEditor.U2D;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
-
-// TODO: the image cooldown doesn't work because scripitable objects only take prefabs and not gameobjects. So, i need to just get the image by donig the get child function.
-
 public class CommandCooldown : MonoBehaviour
 {
 /*    [SerializeField]
